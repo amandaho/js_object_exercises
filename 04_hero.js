@@ -4,7 +4,7 @@
  * Copy your code from the previous exercise.
  *
  * Add a SETTER method to your LivingThing class named "setHealth" that lets you update the value
- * of the "health" property.
+ * of the "health" property. --
  *
  * Now, create a NEW object called "Hero" that EXTENDS the LivingThing class.
  *
@@ -39,8 +39,67 @@
     ///////////////////////////
     // Put your code here!
     ///////////////////////////
+    function livingThing(monsterName, monsterHealth) {
+    var name = monsterName;
+    var health = monsterHealth;
 
-    
+    this.isAlive = function() {
+      if (this.gethealth > 0) {
+        return true;
+      } else
+        return false;
+    }
+    this.getName = function() {
+      return name;
+    }
+    this.getHealth = function() {
+      return health;
+    }
+    this.setHealth = function(x) {
+      health = health - x;
+    }
+  }
+
+  function Hero(monsterName, monsterHealth) {
+    livingThing.call(this, monsterName, monsterHealth)
+
+      this.attack = function (livingThing){
+        let monsterLoss = getRandomIntInclusive(0, 10);
+        livingThing.setHealth(monsterLoss);
+        console.log(livingThing.getName() + " loss of " + monsterLoss + " the remaining " + livingThing.getHealth());
+
+        let heroLoss = getRandomIntInclusive(0, 10);
+        this.setHealth(heroLoss);
+        console.log("Amanda received a loss of " + heroLoss + "  the remaining health is " + this.getHealth());
+
+      }
+
+      this.fight = function (monsters) {
+        for(let i = 0; i < monsters.length; i++){
+          while(this.getHealth() > 0 && monsters[i].getHealth() > 0) {
+            this.attack(monsters[i]);
+          }
+      }
+  }
+}
+
+
+  function getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  //Reduce the LivingThing object's health by a random value between 0 and 10.
+  let livingThing1 = new livingThing("Rat", 5);
+  let livingThing2 = new livingThing("Goblin", 30);
+  let livingThing3 = new livingThing("Ogre", 80);
+
+  let hero = new Hero ("Amanda", 100);
+
+  let monsters = [livingThing1, livingThing2, livingThing3];
+
+
+
+
+
 
     //The code below should work when you are done
     console.log("A hero emerges!");
